@@ -10,6 +10,6 @@ find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(nostalgia_cpp main.cpp)
+add_executable(nostalgia_cpp main.cpp analyse.cpp)
 
 target_link_libraries(nostalgia_cpp ${OpenCV_LIBS})

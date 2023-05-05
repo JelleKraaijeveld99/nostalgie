@@ -56,6 +56,13 @@ build CMakeFiles/nostalgia_cpp.dir/main.cpp.o: CXX_COMPILER__nostalgia_cpp_Debug
   OBJECT_DIR = CMakeFiles/nostalgia_cpp.dir
   OBJECT_FILE_DIR = CMakeFiles/nostalgia_cpp.dir
 
+build CMakeFiles/nostalgia_cpp.dir/analyse.cpp.o: CXX_COMPILER__nostalgia_cpp_Debug /Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/analyse.cpp || cmake_object_order_depends_target_nostalgia_cpp
+  DEP_FILE = CMakeFiles/nostalgia_cpp.dir/analyse.cpp.o.d
+  FLAGS = -g -arch x86_64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -fcolor-diagnostics -std=gnu++17
+  INCLUDES = -isystem /usr/local/Cellar/opencv/4.7.0_4/include/opencv4
+  OBJECT_DIR = CMakeFiles/nostalgia_cpp.dir
+  OBJECT_FILE_DIR = CMakeFiles/nostalgia_cpp.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target nostalgia_cpp
@@ -64,7 +71,7 @@ build CMakeFiles/nostalgia_cpp.dir/main.cpp.o: CXX_COMPILER__nostalgia_cpp_Debug
 #############################################
 # Link the executable nostalgia_cpp
 
-build nostalgia_cpp: CXX_EXECUTABLE_LINKER__nostalgia_cpp_Debug CMakeFiles/nostalgia_cpp.dir/main.cpp.o | /usr/local/lib/libopencv_gapi.4.7.0.dylib /usr/local/lib/libopencv_highgui.4.7.0.dylib /usr/local/lib/libopencv_ml.4.7.0.dylib /usr/local/lib/libopencv_objdetect.4.7.0.dylib /usr/local/lib/libopencv_photo.4.7.0.dylib /usr/local/lib/libopencv_stitching.4.7.0.dylib /usr/local/lib/libopencv_video.4.7.0.dylib /usr/local/lib/libopencv_videoio.4.7.0.dylib /usr/local/lib/libopencv_imgcodecs.4.7.0.dylib /usr/local/lib/libopencv_dnn.4.7.0.dylib /usr/local/lib/libopencv_calib3d.4.7.0.dylib /usr/local/lib/libopencv_features2d.4.7.0.dylib /usr/local/lib/libopencv_flann.4.7.0.dylib /usr/local/lib/libopencv_imgproc.4.7.0.dylib /usr/local/lib/libopencv_core.4.7.0.dylib
+build nostalgia_cpp: CXX_EXECUTABLE_LINKER__nostalgia_cpp_Debug CMakeFiles/nostalgia_cpp.dir/main.cpp.o CMakeFiles/nostalgia_cpp.dir/analyse.cpp.o | /usr/local/lib/libopencv_gapi.4.7.0.dylib /usr/local/lib/libopencv_highgui.4.7.0.dylib /usr/local/lib/libopencv_ml.4.7.0.dylib /usr/local/lib/libopencv_objdetect.4.7.0.dylib /usr/local/lib/libopencv_photo.4.7.0.dylib /usr/local/lib/libopencv_stitching.4.7.0.dylib /usr/local/lib/libopencv_video.4.7.0.dylib /usr/local/lib/libopencv_videoio.4.7.0.dylib /usr/local/lib/libopencv_imgcodecs.4.7.0.dylib /usr/local/lib/libopencv_dnn.4.7.0.dylib /usr/local/lib/libopencv_calib3d.4.7.0.dylib /usr/local/lib/libopencv_features2d.4.7.0.dylib /usr/local/lib/libopencv_flann.4.7.0.dylib /usr/local/lib/libopencv_imgproc.4.7.0.dylib /usr/local/lib/libopencv_core.4.7.0.dylib
   FLAGS = -g -arch x86_64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib  /usr/local/lib/libopencv_gapi.4.7.0.dylib  /usr/local/lib/libopencv_highgui.4.7.0.dylib  /usr/local/lib/libopencv_ml.4.7.0.dylib  /usr/local/lib/libopencv_objdetect.4.7.0.dylib  /usr/local/lib/libopencv_photo.4.7.0.dylib  /usr/local/lib/libopencv_stitching.4.7.0.dylib  /usr/local/lib/libopencv_video.4.7.0.dylib  /usr/local/lib/libopencv_videoio.4.7.0.dylib  /usr/local/lib/libopencv_imgcodecs.4.7.0.dylib  /usr/local/lib/libopencv_dnn.4.7.0.dylib  /usr/local/lib/libopencv_calib3d.4.7.0.dylib  /usr/local/lib/libopencv_features2d.4.7.0.dylib  /usr/local/lib/libopencv_flann.4.7.0.dylib  /usr/local/lib/libopencv_imgproc.4.7.0.dylib  /usr/local/lib/libopencv_core.4.7.0.dylib
   OBJECT_DIR = CMakeFiles/nostalgia_cpp.dir
