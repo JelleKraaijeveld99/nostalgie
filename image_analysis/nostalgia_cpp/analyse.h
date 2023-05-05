@@ -27,7 +27,14 @@ public:
     char *shapeStringArr;
     int *colorIntArr;
     int *shapeIntArr;
+
+    //variable for the path
     string pathToImg;
+
+    //variable for the source and converted gray image and converted threshold image
+    Mat srcImg;
+    Mat grayImg;
+    Mat threshImg;
 
 //TODO: PERCENTAGE OF COLORS
 };
