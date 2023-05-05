@@ -2,13 +2,16 @@
 #define _ANA_H_
 #pragma once
 
+#include <opencv2/opencv.hpp>
 #include <string>
-using namespace std
+
+using namespace std;
+using namespace cv;
 
 class Analyse {
 public:
 //constructor and deconstructor
-    Analyse();
+    Analyse(string path);
     ~Analyse();
 
 //setters and getters
@@ -24,6 +27,9 @@ public:
     char *shapeStringArr;
     int *colorIntArr;
     int *shapeIntArr;
+    string pathToImg;
+
+//TODO: PERCENTAGE OF COLORS
 };
 
 #endif
