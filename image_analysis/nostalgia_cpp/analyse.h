@@ -13,7 +13,7 @@ using namespace cv;
 class Analyse {
 public:
 //constructor and deconstructor
-    Analyse(string path);
+    Analyse();
     ~Analyse();
 
 //setters and getters
@@ -21,7 +21,7 @@ public:
     int getColors();
 
 //functions for retrieving information
-    void analyseShapes();
+    void analyseShapes(string path);
     void analyseColors();
 
 //variables to store the results of the analysis

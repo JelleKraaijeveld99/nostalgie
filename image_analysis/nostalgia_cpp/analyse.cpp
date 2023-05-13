@@ -1,9 +1,8 @@
 #include "analyse.h"
 
 
-Analyse::Analyse(string path) {
+Analyse::Analyse() {
     //initialise the path variable
-    pathToImg = path;
 
     //test
 //    Mat srcImage = cv::imread(pathToImg); // Use full path!
@@ -18,7 +17,8 @@ void Analyse::analyseColors() {
 
 }
 
-void Analyse::analyseShapes() {
+void Analyse::analyseShapes(string path) {
+    pathToImg = path;
     RNG rng(12345);
     //declaring the srcImg variable
     srcImg = imread(pathToImg);
@@ -30,12 +30,13 @@ void Analyse::analyseShapes() {
     imshow("[img]", grayImg);
 
     //adaptive thresholding so the thresholding is more accurate and doest filter out whole pieces of the image
-    adaptiveThreshold(grayImg, threshImg, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 17, 2);
+    adaptiveThreshold(grayImg, threshImg, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 17, 40);
     imshow("[img]", threshImg);
 
     // apply morphology operations to remove noise
     Mat kernel = getStructuringElement(MORPH_ELLIPSE, Size(5, 5));
     morphologyEx(threshImg, threshImg, MORPH_OPEN, kernel, Point(-1,-1), 2);
+    imshow("[threshhhimg]", threshImg);
 
     imshow("[img]", threshImg);
 
