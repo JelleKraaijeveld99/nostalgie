@@ -4,6 +4,8 @@
 
 #include <opencv2/opencv.hpp>
 #include <string>
+#include <utility>
+
 
 using namespace std;
 using namespace cv;
@@ -35,6 +37,9 @@ public:
     Mat srcImg;
     Mat grayImg;
     Mat threshImg;
+
+    int circleAmount;
+    int notCircleAmount;
 
 //TODO: PERCENTAGE OF COLORS
 };
