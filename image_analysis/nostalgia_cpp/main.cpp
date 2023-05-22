@@ -8,12 +8,19 @@
 using namespace cv;
 
 int main() {
-
-
+//    std::cout << "start main" << std::endl;
     Analyse analyse;
+    std::cout << "analysis init" << std::endl;
+//    analyse.analyseShapes("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/thuis.jpg");
+    analyse.analyseColors("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/white.png");
+    std::cout << "complete" << std::endl;
 
-    //create an object for the camera
+    waitKey(0);
+
+/*//SECTION OF THE CODE FOR ANALYSING A PICTURE EVERY X SECONDS//
+   //create an object for the camera
     VideoCapture cap(0);
+
 
     //check if the camera is available
     if (!cap.isOpened())
@@ -28,7 +35,7 @@ int main() {
     int count = 0;
     //variables for how max amount of pictures
     int pictureCount;
-    int maxPictures;
+    int maxPictures = 10;
 
 
     while (true) {
@@ -40,8 +47,8 @@ int main() {
             continue;
         }
 
-        // Write the frame to a file every 10 seconds
-        if (count % 10000 == 0) {
+        // Write the frame to a file every 10(?) seconds
+        if (count % 5 == 0) {
             string filename = "image_test.png";
             cv::imwrite(filename, frame);
 
@@ -62,13 +69,8 @@ int main() {
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
-    cap.release();
+//    cap.release();
+    waitKey(0);*/
     return 0;
 }
 
-//    cv::Mat srcImage = cv::imread("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/thuis.jpg"); // Use full path!
-//    cv::imshow("[img]", srcImage);
-
-//    analyse.analyseShapes();
-//    waitKey(0);
-//    return 0;

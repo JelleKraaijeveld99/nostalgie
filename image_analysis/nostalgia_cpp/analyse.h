@@ -22,7 +22,7 @@ public:
 
 //functions for retrieving information
     void analyseShapes(string path);
-    void analyseColors();
+    void analyseColors(string path);
 
 //variables to store the results of the analysis
     char *colorStringArr;

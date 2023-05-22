@@ -13,7 +13,46 @@ Analyse::~Analyse() {
 
 }
 
-void Analyse::analyseColors() {
+void Analyse::analyseColors(string path) {
+    //variables for all the colors in the picture:
+    int black;
+    int gray;
+    int white;
+    int red;
+    int orange;
+    int yellow;
+    int green;
+    int blue;
+    int purple;
+    int brown;
+    int pink;
+
+    pathToImg = path;
+    srcImg = imread(pathToImg);
+    imshow("[test]",srcImg);
+
+    //variable for storing the hsv image so we can extract the hue value from the saturation and value
+    Mat HSV;
+    cvtColor(srcImg, HSV, COLOR_BGR2HSV) ;
+    imshow("HSV",HSV);
+
+    //make empty vector for storing hue, saturation and value per pixel
+    vector<Mat> channels;
+    split(HSV, channels);
+    //extract the hue value
+    Mat hue = channels[0];
+
+    //iterate over each pixel by first making a for loop going through the height of the picture and in this for loop iterate over the width
+    for(int y = 0; y <hue.rows; y++){
+        for(int x = 0; x <hue.cols; x++){
+            uchar hueValue = hue.at<uchar>(y,x);
+            //section in the code for counting the colored pixels
+//            if (hueValue);
+
+            std::cout << "Pixel at (" << x << ", " << y << "): " << static_cast<int>(hueValue) << std::endl;
+        }
+    }
+
 
 }
 
@@ -56,6 +95,8 @@ void Analyse::analyseShapes(string path) {
         std::vector<Point> approx;
         approxPolyDP(contours[i], approx, epsilon, true);
         drawContours(srcImg,contours,0,(0,0,0),4);
+
+        //parameters for writing the shape in the picture
         Rect boundRect = boundingRect(approx);
         int x = boundRect.x;
         int y = boundRect.y;
