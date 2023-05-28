@@ -23,6 +23,9 @@ public:
 //functions for retrieving information
     void analyseShapes(string path);
     void analyseColors(string path);
+    //new color analyse function
+    void colorAnalyse(string path);
+    void defineColor(uchar hue, uchar saturation, uchar value);
 
 //variables to store the results of the analysis
     char *colorStringArr;

@@ -13,6 +13,14 @@ Analyse::~Analyse() {
 
 }
 
+void Analyse::defineColor(uchar hue, uchar saturation, uchar value) {
+    //variables
+    uchar H = hue;
+    uchar S = saturation;
+    uchar V = value;
+
+}
+
 void Analyse::analyseColors(string path) {
     //variables for all the colors in the picture:
     int black;
@@ -31,27 +39,90 @@ void Analyse::analyseColors(string path) {
     srcImg = imread(pathToImg);
     imshow("[test]",srcImg);
 
+
     //variable for storing the hsv image so we can extract the hue value from the saturation and value
     Mat HSV;
     cvtColor(srcImg, HSV, COLOR_BGR2HSV) ;
     imshow("HSV",HSV);
+    std::cout << "this is the type: " << HSV.type() << std::endl;
 
     //make empty vector for storing hue, saturation and value per pixel
     vector<Mat> channels;
     split(HSV, channels);
     //extract the hue value
     Mat hue = channels[0];
+    Mat saturation = channels[1];
+    Mat value = channels[2];
+    imshow("saturation",saturation);
+    imshow("value",value);
+    imshow("hue®",hue);
+    std::cout << "this is the hue type: " << hue.type() << std::endl;
 
-    //iterate over each pixel by first making a for loop going through the height of the picture and in this for loop iterate over the width
-    for(int y = 0; y <hue.rows; y++){
-        for(int x = 0; x <hue.cols; x++){
-            uchar hueValue = hue.at<uchar>(y,x);
-            //section in the code for counting the colored pixels
-//            if (hueValue);
 
-            std::cout << "Pixel at (" << x << ", " << y << "): " << static_cast<int>(hueValue) << std::endl;
+    for(int y = 0; y <hue.rows; y++) {
+        for (int x = 0; x < hue.cols; x++) {
+            channels[1].at<uchar>(y, x) = 255;
         }
     }
+    Mat mergedChannels;
+    merge(channels, mergedChannels);
+    Mat RGBmergedChannels;
+    cvtColor(mergedChannels, RGBmergedChannels, COLOR_HSV2BGR) ;
+    imshow("mergedchannels",RGBmergedChannels);
+
+
+            //iterate over each pixel by first making a for loop going through the height of the picture and in this for loop iterate over the width
+    for(int y = 0; y < 1; y++){
+        for(int x = 0; x <20; x++){
+            uchar hueValue = hue.at<uchar>(y,x);
+            uchar saturationValue = saturation.at<uchar>(y,x);
+            uchar valueValue = value.at<uchar>(y,x);
+
+              std::cout << "Pixel hue at (" << x << ", " << y << "): " << static_cast<int>(hueValue) << std::endl;
+              std::cout << "Pixel saturation at (" << x << ", " << y << "): " << static_cast<int>(saturationValue) << std::endl;
+              std::cout << "Pixel value at (" << x << ", " << y << "): " << static_cast<int>(valueValue) << std::endl;
+        }
+    }
+
+
+}/**/
+
+void Analyse::colorAnalyse(std::string path) {
+    //initialisation
+    pathToImg = path;
+    srcImg = imread(pathToImg);
+    imshow("[source]",srcImg);
+
+    //convert RGB to HSV values
+    Mat hsv;
+    cvtColor(srcImg, hsv, cv::COLOR_BGR2HSV );
+
+    //split the HSV values in three channels
+    Mat hsvChannels[3];
+    split(hsv, hsvChannels);
+
+    //display the three different channels H S V as grayscale image
+    // ==========  show result ==========
+    imshow("hue", hsvChannels[0]);
+    imshow("saturation", hsvChannels[1]);
+    imshow("value", hsvChannels[2]);
+    imshow("generated", srcImg);
+
+// apply mask to remove 'too white colors'
+    // should result in an image without the polygon
+    // create a mask image
+    Mat saturationMask;
+    // E.G. --> with mask 20 or 10, different results
+    int thresholdValue = 20;
+    threshold(hsvChannels[1], saturationMask,thresholdValue, 255, THRESH_BINARY_INV );
+    saturationMask = 255 - saturationMask;
+    threshold(hsvChannels[1], saturationMask,thresholdValue, 255, THRESH_BINARY );
+    imshow("saturationMask", saturationMask);
+
+    // apply mask to filter out the color white
+    Mat maskedImg;
+    srcImg.copyTo(maskedImg, saturationMask);
+    imshow("generated & masked", maskedImg);
 
 
 }
