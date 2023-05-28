@@ -125,6 +125,15 @@ void Analyse::colorAnalyse(std::string path) {
     imshow("generated & masked", maskedImg);
 
 
+
+    for(int y = 0; y <hsvChannels[0].rows; y++) {
+        for (int x = 0; x < hsvChannels[0].cols; x++) {
+            uchar hueValue = hsvChannels[0].at<uchar>(y, x);
+            std::cout << "Pixel hue at (" << x << ", " << y << "): " << static_cast<int>(hueValue) << std::endl;
+        }
+    }
+
+
 }
 
 void Analyse::analyseShapes(string path) {

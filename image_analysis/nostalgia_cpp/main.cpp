@@ -12,7 +12,7 @@ int main() {
     Analyse analyse;
     std::cout << "analysis init" << std::endl;
 //    analyse.analyseShapes("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/thuis.jpg");
-    analyse.colorAnalyse("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/crayontest1.jpg");
+    analyse.colorAnalyse("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/green.png");
     std::cout << "complete" << std::endl;
 
     waitKey(0);
