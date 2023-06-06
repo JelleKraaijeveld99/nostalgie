@@ -222,29 +222,36 @@ void Analyse::colorPercentage() {
     std::cout << "% of pink pixels: " << perYellow << std::endl;
     std::cout << "% of purple pixels: " << perCyan << std::endl;
 
-
-
-
-
 }
 
 void Analyse::sendPercentageOSC() {
     lo_address target;
     string symbol;
-    int fake_timestamp=0;
+    int fake_timestamp=0;;
 
-        target = lo_address_new("localhost","7777");
-        while(1)
-        {
+    target = lo_address_new("localhost","7777");
+    std::cout << "HOPPA " << std::endl;
 
-            cin >> symbol;
-            if(symbol == "quit" || symbol == "q") break;
-            std::cout << "HOPPA " << std::endl;
-            lo_send(target,"/sound","siii","pitch",1,1,42);
-            lo_send(target,"/tactile","ii",1,42);
+    lo_send(target,"/red","sf","red",perRed);
+    lo_send(target,"/blue","sf","blue",perBlue);
+    lo_send(target,"/green","sf","green",perGreen);
+    lo_send(target,"/purple","sf","purple",perPurple);
+    lo_send(target,"/pink","sf","pink",perPink);
+    lo_send(target,"/orange","sf","orange",perOrange);
+    lo_send(target,"/yellow","sf","yellow",perYellow);
+    lo_send(target,"/cyan","sf","cyan",perCyan);
 
-            fake_timestamp++;
-        }
+//    while(1)
+//    {
+//        cin >> symbol;
+//        if(symbol == "quit" || symbol == "q") break;
+//        else if(symbol == "send" || symbol == "s") {
+//            lo_send(target,"/sound","siii","pitch",1,1,42);
+//            lo_send(target,"/tactile","ii",1,42);
+//        }
+//
+//        fake_timestamp++;
+//    }
 }
 
 void Analyse::analyseShapes(string path) {

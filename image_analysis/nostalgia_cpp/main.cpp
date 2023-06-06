@@ -12,8 +12,9 @@ int main() {
     Analyse analyse;
     std::cout << "analysis init" << std::endl;
 //    analyse.analyseShapes("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/thuis.jpg");
-    analyse.sendPercentageOSC(); 
-    analyse.colorAnalyse("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/paint_test.png");
+//    analyse.sendPercentageOSC();
+    analyse.colorAnalyse("/Users/jellekraaijeveld/Documents/HKU1/Jaar_2/CSD/nostalgie/image_analysis/nostalgia_cpp/professor_8jaar.png");
+    analyse.sendPercentageOSC();
     std::cout << "complete" << std::endl;
 
 
