@@ -18,24 +18,11 @@ public:
     Analyse();
     ~Analyse();
 
-//setters and getters
-    int getShapes();
-    int getColors();
-
-//functions for retrieving information
-    void analyseShapes(string path);
-    void analyseColors(string path);
+    //functions
     //new color analyse function
     void colorAnalyse(string path);
-    void defineColor(uchar hue, uchar saturation, uchar value);
     void colorPercentage();
     void sendPercentageOSC();
-
-//variables to store the results of the analysis
-    char *colorStringArr;
-    char *shapeStringArr;
-    int *colorIntArr;
-    int *shapeIntArr;
 
     //variable for the path
     string pathToImg;
@@ -44,10 +31,6 @@ public:
     Mat srcImg;
     Mat grayImg;
     Mat threshImg;
-
-    int circleAmount;
-    int notCircleAmount;
-
 
     int pixelAmount = 0;
 
@@ -71,8 +54,6 @@ public:
     float perYellow;
     float perCyan;
 
-
-//TODO: PERCENTAGE OF COLORS
 };
 
 #endif
