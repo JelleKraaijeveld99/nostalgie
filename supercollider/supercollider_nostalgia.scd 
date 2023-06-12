@@ -1,0 +1,174 @@
+(
+// Define the 'zaagje' synth, which produces a sawtooth-like sound
+SynthDef(\zaagje, {
+	arg atk = 2, sus = 0, rel = 3, c1 = 1, c2 = -1,
+		freq = 500, detune = 0.2, cfmin = 500, cfmax = 2000, rqmin = 0.1, rqmax = 0.2,
+		lsf = 200, ldb = 0, amp = 1, out = 0, pan = 0,
+		cfhzmin = 0.1, cfhzmax = 0.3,filter=18000,rq=1;
+	var sig, env;
+
+	// Generate an envelope for shaping the sound
+	env = EnvGen.kr(Env([0, 1, 1, 0], [atk, sus, rel], [c1, 0, c2]), doneAction: 2);
+
+	// Create a sawtooth wave with frequency and detune
+	sig = Saw.ar(freq * { LFNoise1.kr(0.5, detune).midiratio } ! 2);
+
+	// Apply bandpass filtering to the signal
+	sig = BPF.ar(
+		sig,
+		{ LFNoise1.kr(LFNoise1.kr(4).exprange(cfhzmin, cfhzmax)).exprange(cfmin, cfmax) } ! 2,
+		{ LFNoise1.kr(0.1).exprange(rqmin, rqmax) } !2);
+
+	// Apply low shelf filtering to the signal
+	sig = BLowShelf.ar(sig, lsf, 0.5, ldb);
+
+	sig = BLowPass.ar(sig,filter,rq);
+	// Balance the signal between left and right channels
+	sig = Balance2.ar(sig[0], sig[1], pan);
+
+
+	// Apply the envelope and amplitude to the signal
+	sig = sig * env * amp;
+
+	// Output the final signal
+	Out.ar(out, sig);
+}).add;
+
+// Define the 'bloepjes' synth, which produces blip-like sounds
+SynthDef.new(\bloepjes, {
+	arg out,midinote, fund = 300, dens = 2, decay = 0.2;
+	var freq, trig, sig;
+
+	// Generate the frequency with some randomness
+	// freq = LFNoise0.kr(3).exprange(fund, fund * 4).round(fund);
+	freq = midinote.midicps;
+	// Create a sinus wave
+	sig = SinOsc.ar(freq) * 0.25;
+
+	// Generate triggers for envelope with some density
+	trig = Dust.kr(dens);
+
+	// Apply an envelope to the signal
+	sig = sig * EnvGen.kr(Env.perc(0.01, decay), trig);
+
+	// Apply panning with some variation
+	sig = Pan2.ar(sig, LFNoise1.kr(10));
+
+	// Scale down the signal
+	sig = sig / 2;
+
+	// Output the final signal
+	Out.ar(out, sig);
+}).add;
+
+// Define the 'verb' synth, which applies a reverberation effect
+SynthDef.new(\reverb, {
+    arg in,  out=0, wet=1;
+    var sig;
+    sig = In.ar(in,2);
+    sig = FreeVerb.ar(sig,wet, 0.8,0.2);
+    Out.ar(out,sig);
+    }).add;
+)
+// Create a pattern for the zaagje, generating chords
+(
+~akkoorden = Pbind(
+	\instrument, \zaagje,
+	\dur, Pwhite(4.5, 7.0, inf),
+	\midinote, Pxrand([
+		[23, 35, 54, 63, 64],
+		[45, 52, 54, 59, 61, 64],
+		[28, 40, 47, 56, 59, 63],
+		[42, 52, 57, 61, 63]
+	], inf),
+	\detune, Pexprand(0.05, 0.2, inf),
+	\cfmin, 100,
+	\cfmax, 1500,
+	\rqmin, Pexprand(0.01, 0.15, inf),
+	\atk, Pwhite(2.5, 2.0, inf),
+	\rel, Pwhite(6.5, 10.0, inf),
+	\ldb, 6,
+	\filter,18000,
+	\lsf,200,
+	\amp, 0.2,
+	\out, 0,
+
+
+).play;
+
+// Define the chord progressions
+~chordProgressions = [
+    [23, 35, 54, 63, 64],
+    [45, 52, 54, 59, 61, 64],
+    [28, 40, 47, 56, 59, 63],
+    [42, 52, 57, 61, 63]
+];
+
+// Create 8 instances of 'bloepjes' synth with higher octave and random chord progressions
+8.do {
+    var chordProgression = ~chordProgressions.choose;
+
+    var higherOctaveProgression = chordProgression.collect { |note| note + 24 };  // Raise the octave
+
+    Synth.new(
+        \bloepjes,
+        [
+            \out, ~reverbBus2,  // Connect to reverb bus
+
+            // Pass the higher octave chord progression
+            \midinote, higherOctaveProgression,
+
+            \fund, exprand(10, 1000).round(30),  // Randomize the fundamental frequency
+			\dens,0.1l
+        ],
+        ~sourceGrp  // Assign to the source group
+    );
+};
+
+
+)
+// Adjust properties of the 'bloepjes' synth group
+~sourceGrp.set(\dens, 0.2);
+~sourceGrp.set(\fund, 300);
+~fxGrp.set(\wet, 0.5);
+
+// Stop
+(
+~akkoorden.stop;
+~sourceGrp.freeAll;
+)
+
+// Create new synth groups for the source and effects
+~sourceGrp = Group.new;
+~fxGrp = Group.after(~sourceGrp);
+
+// Create an instance of verb
+y = Synth.new(\reverb, [\in, ~reverbBus2], ~fxGrp);
+
+s.plotTree;
+
+//osc
+(
+OSCdef.new(\get,{
+    arg msg;
+	var density;
+	density= msg[1];
+    density.postln;
+    if ( msg[1] > 0,{
+        ~sourceGrp.set(\dens, density);
+    });
+    },
+    '/orange'
+);
+OSCdef.new(\get,{
+    arg msg;
+	var filter;
+	filter= msg[2];
+    filter.postln;
+    if ( msg[2] > 0,{
+        ~akkoorden:(\filter,300.0);
+    });
+    },
+    '/red'
+);
+)
